@@ -1,0 +1,32 @@
+{% extends 'main.html' %} {% block title %} profile {% endblock title %} {% block content %}
+
+
+<div class="container">
+
+
+
+
+    <div class="container">
+
+
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+                <h4>Edit Profile </h4>
+
+                <form method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %} {{ userform.as_p }} {{ profileform.as_p}}
+
+                    <button class="btn btn-secondary">post now</button>
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+{% endblock content %}

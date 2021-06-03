@@ -1,0 +1,21 @@
+{% extends "main.html" %} {%load crispy_forms_tags %} {% block content %}
+
+
+<div class="container ">
+
+
+    <form method="post">
+        {% csrf_token %} {{ form|crispy }}
+
+        <button type="submit" class="btn btn-secondary">Signup</button>
+
+        <p class="mt-2">already have an account <a href="{% url 'login' %} " class="text-secondary ">Login</a></p>
+
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+
+
+</div>
+
+{% endblock %}

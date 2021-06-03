@@ -1,0 +1,323 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Lobster&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title  -->
+    <title>
+        {% block title %} Karl - Fashion Ecommerce Template | Home {% endblock title %}
+    </title>
+
+    <!-- Favicon  -->
+    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
+
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="{% static 'css/core-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- Responsive CSS -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+
+    <style>
+        .mylogo {
+            font-family: 'Dancing Script', cursive;
+            font-family: 'Lobster', cursive;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+
+        function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken')
+
+        function getCookie(name) {
+            // Split cookie string and get all individual name=value pairs in an array
+            var cookieArr = document.cookie.split(";");
+
+            // Loop through the array elements
+            for (var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+
+                /* Removing whitespace at the beginning of the cookie name
+                and compare it with the given string */
+                if (name == cookiePair[0].trim()) {
+                    // Decode the cookie value and return
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            // Return null if not found
+            return null;
+        }
+        var cart = JSON.parse(getCookie('cart'))
+
+        if (cart == undefined) {
+            cart = {}
+            console.log('Cart Created!', cart)
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log('Cart:', cart)
+    </script>
+
+
+</head>
+
+<body>
+    <div class="catagories-side-menu">
+        <!-- Close Icon -->
+        <div id="sideMenuClose">
+            <i class="ti-close"></i>
+        </div>
+        <!--  Side Nav  -->
+        <div class="nav-side-menu">
+            <div class="menu-list">
+                <h6>Categories</h6>
+                <ul id="menu-content" class="menu-content collapse out">
+                    <!-- Single Item -->
+                    <li data-toggle="collapse" data-target="#women" class="collapsed active">
+                        <a href="#">Trendy Jeans <span class="arrow"></span></a>
+                    </li>
+                    <!-- Single Item -->
+                    <li data-toggle="collapse" data-target="#man" class="collapsed">
+                        <a href="#">Summer Skirts <span class="arrow"></span></a>
+
+                    </li>
+                    <!-- Single Item -->
+                    <li data-toggle="collapse" data-target="#kids" class="collapsed">
+                        <a href="#">Trendy Dresses  <span class="arrow"></span></a>
+
+                    </li>
+                    <!-- Single Item -->
+                    <li data-toggle="collapse" data-target="#bags" class="collapsed">
+                        <a href="#">Bags &amp; Purses <span class="arrow"></span></a>
+                    </li>
+
+                    <!-- Single Item -->
+                    <li data-toggle="collapse" data-target="#bags" class="collapsed">
+                        <a href="#">2021 Trendy Shoes , caps &amp; more <span class="arrow"></span></a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="wrapper">
+
+        <!-- ****** Header Area Start ****** -->
+        <header class="header_area">
+            <!-- Top Header Area Start -->
+            <div class="top_header_area">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center justify-content-end">
+
+                        <div class="col-12 col-lg-7">
+                            <div class="top_single_area d-flex align-items-center">
+                                <!-- Logo Area -->
+                                <div class="top_logo">
+                                    <a href="#" vlass="mr-auto" style=" font-family: 'Dancing Script', cursive;
+                                    font-family: 'Lobster', cursive; font-size:2rem;">
+                                        <span style="color:#ff084e;">
+                                    Lia 
+                                    </span>
+                                        <i class="fa fa-shopping-bag" style="color:#ff084e;"></i> Fasion
+                                    </a>
+                                </div>
+                                <!-- Cart & Menu Area -->
+                                <div class="header-cart-menu d-flex align-items-center ml-auto">
+                                    <!-- Cart Area -->
+                                    <div class="cart">
+                                        <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">{{ order.get_cart_items }} </span> <i class="ti-bag"></i></a>
+                                        <!-- Cart List Area Start -->
+                                        <ul class="cart-list">
+
+
+                                            {% for item in items %}
+
+                                            <li>
+                                                <a href="#" class="image"><img src="{{ item.product.imageURL}}" class="cart-thumb" alt=""></a>
+                                                <div class="cart-item-desc">
+                                                    <h6><a href="#">{{ item.product.name }}</a></h6>
+                                                    <p>x{{item.quantity }} - <span class="price">${{item.product.price|floatformat:2}}</span></p>
+                                                </div>
+                                                <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
+                                            </li>
+
+
+                                            {% endfor %}
+
+                                            <li class="total">
+                                                <span class="pull-right">Total: ${{ order.get_cart_total|floatformat:2 }} </span>
+                                                <a href="{% url 'cart' %}" class="btn btn-sm btn-cart">Cart</a>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="header-right-side-menu ml-15">
+                                        <a href="#" id="sideMenuBtn"><i class="ti-menu" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Header Area End -->
+            <div class="main_header_area">
+                <div class="container h-100">
+                    <div class="row h-100">
+                        <div class="col-12 d-md-flex justify-content-between">
+                            <!-- Header Social Area -->
+
+                            <!-- Menu Area -->
+                            <div class="main-menu-area">
+                                <nav class="navbar navbar-expand-lg align-items-start">
+
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#karl-navbar" aria-controls="karl-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"><i class="ti-menu"></i></span></button>
+
+                                    <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
+                                        <ul class="navbar-nav animated" id="nav">
+                                            <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
+
+                                                    <a class="dropdown-item" href="{% url 'cart' %}">Cart</a>
+                                                    <a class="dropdown-item" href="{% url 'checkout' %}">Checkout</a>
+                                                </div>
+                                            </li>
+
+
+                                            {% if user.is_authenticated %}
+
+
+
+
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.username }}</a>
+                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
+                                                    <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                                                    <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                                                </div>
+                                            </li>
+
+
+                                            {% else %}
+
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">guest user</a>
+                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
+                                                    <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                                                    <a class="dropdown-item" href="{% url 'signup' %}">Signup</a>
+                                                </div>
+                                            </li>
+
+
+                                            {% endif %}
+
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <!-- Help Line -->
+                            <div class="help-line">
+
+                                <form method="GET">
+                                    {{ myfilter.form}}
+
+
+                                    <button type="submit" placeholder="search product ... " class="btn btn-primary mt-2 d-block" style="background-color: #ff084e; border: none;">
+                                        search
+                                    </button>
+
+
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- ****** Header Area End ****** -->
+
+
+
+
+        <!-- todo content   -->
+
+
+        {% block content %} {% endblock content %}
+
+
+
+        <!-- todo end of content  -->
+
+
+        <!-- ****** Footer Area Start ****** -->
+        <footer class="footer mt-3 pt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="footer-logo">
+                            <span style="color:#ff084e;">
+                                Lia 
+                                </span>
+                            <i class="fa fa-shopping-bag" style="color:#ff084e;"></i> Fasion
+                            <p>
+                                <span style="font-family: 'New Tegomin', serif ; font-size: 13px;">&copy; All rights reserved 2021</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- ****** Footer Area End ****** -->
+    </div>
+    <!-- /.wrapper end -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
+    <!-- Popper js -->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap js -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Plugins js -->
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <!-- Active js -->
+    <script src="{% static 'js/active.js' %}"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
+
+</body>
+
+</html>
