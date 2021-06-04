@@ -25,7 +25,7 @@
                 <td>{{ form.password }}</td>
             </tr>
         </table>
-        <input type="submit" value="login" />
+        <input class="btn btn-secondary" type="submit" value="login" />
         <input type="hidden" name="next" value="{{ next }}" />
         <br> Don't have an account <a href="{% url 'signup' %} " class="text-secondary ">signup</a>
     </form>
