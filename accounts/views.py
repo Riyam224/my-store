@@ -45,6 +45,7 @@ def profile_edit(request):
             myprofile.user = request.user
             myprofile.save()
             return redirect(reverse('profile'))
+            return redirect(reverse('/'))
 
     else :
         userform = UserForm(instance=request.user)

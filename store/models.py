@@ -6,7 +6,7 @@ from django.urls import reverse
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE , blank=True, null=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE , related_name='customer', blank=True, null=True)
     name = models.CharField( max_length=50 , blank=True, null=True)
     email = models.EmailField( max_length=254)
 

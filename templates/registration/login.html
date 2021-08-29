@@ -25,8 +25,12 @@
                 <td>{{ form.password }}</td>
             </tr>
         </table>
-        <input class="btn btn-secondary" type="submit" value="login" />
-        <input type="hidden" name="next" value="{{ next }}" />
+        <input class="btn btn-secondary" type="submit" value="login" /> <br /> {% if request.GET.next %}
+
+        <input type="hidden" name="next" value="{{ request.GET.next  }} " /> {% endif %}
+
+
+
         <br> Don't have an account <a href="{% url 'signup' %} " class="text-secondary ">signup</a>
     </form>
 
